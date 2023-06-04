@@ -17,7 +17,7 @@
 			FROM board BO, users US
 			WHERE  BO.user_no = US.no  
 		]]>	
-			<if test="aaa != '' " >
+			<if test='aaa != "" and aaa != null' >
 				and BO.title like '%'|| #{aaa} ||'%'
 			</if>
 		<![CDATA[	
