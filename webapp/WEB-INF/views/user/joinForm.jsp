@@ -69,7 +69,7 @@
 							<label class="form-text" for="input-uid">아이디</label> <input type="text" id="input-uid" name="id" value=""
 								placeholder="아이디를 입력하세요">
 							<button type="button" id="btnIdCheck">중복체크</button>
-							<span id="checkMsg"></span>
+							<span id="idcheckMsg"></span>
 						</div>
 
 						<!-- 비밀번호 -->
@@ -143,15 +143,14 @@
 				console.log(userVo);
 				
 				/*성공시 처리해야될 코드 작성*/
-				
-				
-				/* if(userVo == null){
+				if(userVo == null){
 					//사용가능
 					$("#idcheckMsg").html( id+ "는 사용가능 합니다.");     
 				}else {
 					//사용불가
 					$("#idcheckMsg").html( id+ "는 사용중입니다.");    
-				} */
+				}
+				
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
