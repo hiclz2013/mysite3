@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+
+	
+	
+	<!-- 회원가입:회원정보 저장 -->
+	<insert id="insert" parameterType="com.javaex.vo.UserVo">
+		<![CDATA[
+			insert into users
+			values (seq_users_no.nextval,
+			        #{id},
+			        #{password},
+			        #{name},
+			        #{gender} )
+		]]>
+	</insert>
+
+
+	<!-- 로그인:회원정보 가져오기(세션저장용) -->
+	<select id="selectUser" parameterType="com.javaex.vo.UserVo" resultType="com.javaex.vo.UserVo">
+		<![CDATA[
+			select no, name
+			from users
+			where id = #{id}
+			and   password = #{password}
+		]]>
+
+	</select>
+
+
+	<!-- 회원정보수정폼:선택한 번호의 회의정보를 가져오기 -->
+	<select id="selectUserByNo" parameterType="int" resultType="com.javaex.vo.UserVo">
+		<![CDATA[
+			select no, id, password, name, gender
+			from users
+			where no = #{no}
+		]]>
+	</select>
+
+
+
+	<!-- 회원정보 수정 -->
+	<update id="update" parameterType="com.javaex.vo.UserVo">
+		<![CDATA[
+			update users
+			set name = #{name},
+			    gender = #{gender},
+			    password = #{password}
+			where no = #{no}    
+		]]>
+	</update>
+
+
+
+
+	<!-- 회원정보 가져오기(아이디체크, ajax용) -->
+	<select id="selectUserById" parameterType="string" resultType="com.javaex.vo.UserVo">
+		<![CDATA[
+			select no, id
+			from users
+			where id = #{id}
+		]]>
+
+	</select>
+
+
+</mapper>
