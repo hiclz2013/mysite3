@@ -17,8 +17,8 @@
 			FROM board BO, users US
 			WHERE  BO.user_no = US.no  
 		]]>	
-			<if test=" value != '' " >
-				and BO.title like '%'|| #{keyword} ||'%'
+			<if test="aaa != '' " >
+				and BO.title like '%'|| #{aaa} ||'%'
 			</if>
 		<![CDATA[	
 			order by reg_date desc
