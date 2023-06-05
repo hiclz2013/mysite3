@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.UserService;
+import com.javaex.vo.JsonResult;
 import com.javaex.vo.UserVo;
 
 @Controller
@@ -132,14 +133,29 @@ public class UserController {
 	/* 회원가입 id체크 */
 	@ResponseBody
 	@RequestMapping(value = "/idcheck", method = { RequestMethod.GET, RequestMethod.POST })
-	public UserVo idcheck(@RequestParam("id") String id) {
+	public JsonResult idcheck(@RequestParam("id") String id) {
 		System.out.println("UserController.idcheck()");
 		
-		UserVo userVo = userService.idcheck(id);
+		boolean data = userService.idcheck(id);
 		
-		System.out.println(userVo);
+		JsonResult jsonResult = new JsonResult();
+		jsonResult.success(data);
 		
-		return userVo;
+		//jsonResult.fail("통신오류");
+		
+		/*
+		 *getter setter 사용한 경우 --> 잘못 사용할 가능성이 높다
+		jsonResult.setResult("success");
+		jsonResult.setData(data);
+		
+		
+		jsonResult.setResult("fail");
+		jsonResult.setFailMsg("통신오류");
+		*/
+		
+		System.out.println(jsonResult);
+		
+		return jsonResult;
 	}
 	
 	

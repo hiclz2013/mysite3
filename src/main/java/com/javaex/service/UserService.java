@@ -57,11 +57,15 @@ public class UserService {
 	
 	
 	/* 아이디 체크 */
-	public UserVo idcheck(String id) {
+	public boolean idcheck(String id) {
 		System.out.println("UserService.idcheck()");
 		UserVo userVo = userDao.selectUser(id);
 		
-		return userVo;
+		if(userVo == null) { //사용가능
+			return true;
+		}else {              //사용불가능
+			return false;
+		}
 	}
 
 	

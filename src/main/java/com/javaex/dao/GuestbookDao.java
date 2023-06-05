@@ -38,9 +38,6 @@ public class GuestbookDao {
 
 		return sqlSession.delete("guestbook.delete", guestbookVo);
 	}
-
-	
-	
 	
 	
 
@@ -62,7 +59,24 @@ public class GuestbookDao {
 	
 	
 	
+	//ajax 방명록  등록때 사용
+	public int insertSelectKey(GuestbookVo guestbookVo) {
+		System.out.println("GuestbookDao.insertSelectKey()");
+		
+		int count = sqlSession.insert("guestbook.insertSelectKey", guestbookVo);
+		
+		//셀렉트 문 17 번으로 글 가져오기
+		return count;
+	}
 	
+	//ajax 방명록 등록후 no로 글 가져오기
+	public GuestbookVo selectGuest(int no) {
+		System.out.println("GuestbookDao.selectGuest()");
+		
+		GuestbookVo guestbookVo = sqlSession.selectOne("guestbook.selectGuest", no);
+		
+		return guestbookVo;
+	}
 	
 	
 	

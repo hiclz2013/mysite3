@@ -139,24 +139,29 @@
 			data : {id : id},
 	
 			dataType : "json",
-			success : function(userVo){
-				console.log(userVo);
+			success : function(jsonResult){
+				console.log(jsonResult);
 				
-				/*성공시 처리해야될 코드 작성*/
-				if(userVo == null){
-					//사용가능
-					$("#idcheckMsg").html( id+ "는 사용가능 합니다.");     
+				if(jsonResult.result == 'success'){ //처리성공
+					//사용가능한지 불가능 한지 표현한다
+					if(jsonResult.data == true){
+						//사용가능
+						$("#idcheckMsg").html( id+ "는 사용가능 합니다.");    
+					}else {
+						//사용불가
+						$("#idcheckMsg").html( id+ "는 사용중입니다.");    
+					}
+					
 				}else {
-					//사용불가
-					$("#idcheckMsg").html( id+ "는 사용중입니다.");    
+					//메세지 출력
+					var msg = jsonResult.failMsg;
+					alert(msg);
 				}
-				
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
 			}
 		});
-
 		
 	});
 

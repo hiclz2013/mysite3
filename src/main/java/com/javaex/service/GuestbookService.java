@@ -45,7 +45,7 @@ public class GuestbookService {
 	
 	// 방명록 글 저장_게시글 가져오기
 	public GuestbookVo writeResultVo(GuestbookVo guestbookVo) {
-		System.out.println("[guestbookService.writeResultVo()]");
+		System.out.println("GuestbookService.writeResultVo()]");
 		
 		//글저장
 		System.out.println(guestbookVo);  //no가 없다
@@ -64,12 +64,29 @@ public class GuestbookService {
 	
 	// no값으로 no의 모든 정보 가져오기- 안드로이드 사용
 	public GuestbookVo readGuest(int no) {
-		System.out.println("[guestbookService.readGuest()]");
+		System.out.println("GuestbookService.readGuest()]");
 		
 		GuestbookVo guestbookVo = guestbookDao.selectGuestbook(no);
 		return guestbookVo;
 		
 	}
+	
+	
+	//ajax 방명록  등록때 사용
+	public GuestbookVo addGuest(GuestbookVo guestbookVo) {
+		System.out.println("GuestbookService.addGuest()");
+		
+		//글등록  no확인
+		int count  = guestbookDao.insertSelectKey(guestbookVo);
+		int no = guestbookVo.getNo();
+		
+		//no 글가져오기
+		GuestbookVo guestVo = guestbookDao.selectGuest(no);
+		
+		return guestVo;
+		
+	}
+	
 	
 	
 	
