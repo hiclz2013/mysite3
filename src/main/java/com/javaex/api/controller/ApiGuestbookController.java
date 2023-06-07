@@ -33,6 +33,10 @@ public class ApiGuestbookController {
 		return "guestbook/ajaxList";
 	}
 	
+	
+	
+	
+	
 	//ajax 등록
 	@ResponseBody
 	@RequestMapping(value = "/api/guestbook/add", method = {RequestMethod.GET, RequestMethod.POST})
@@ -49,7 +53,18 @@ public class ApiGuestbookController {
 		return jsonResult;
 	}
 	
-	
+	//ajax 삭제
+	@RequestMapping(value = "/api/guestbook/remove", method = {RequestMethod.GET, RequestMethod.POST})
+	public String remove(@ModelAttribute GuestbookVo guestbookVo) {
+		System.out.println("ApiGuestbookController.remove()");
+		System.out.println(guestbookVo);
+		
+		int count = guestbookService.removeGuest(guestbookVo);
+		System.out.println(count);
+		
+		
+		return "";
+	}
 	
 	
 	

@@ -9,8 +9,15 @@
 <link href="${pageContext.request.contextPath }/assets/css/mysite.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath }/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 
+<!-- 부트스트랩 css -->
+<link href="${pageContext.request.contextPath }/assets/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
 
+
+<!-- jquery -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
+<!-- 부트스트랩 js -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.js"></script>
+
 
 
 </head>
@@ -71,10 +78,10 @@
 							<tbody>
 								<tr>
 									<th><label class="form-text" for="input-uname">이름</label>
-									</td>
+									</th>
 									<td><input id="input-uname" type="text" name="name"></td>
 									<th><label class="form-text" for="input-pass">패스워드</label>
-									</td>
+									</th>
 									<td><input id="input-pass" type="password" name="password"></td>
 								</tr>
 								<tr>
@@ -102,7 +109,9 @@
 									<td>${guestVo.no }</td>
 									<td>${guestVo.name }</td>
 									<td>${guestVo.regDate }</td>
-									<td><a href="${pageContext.request.contextPath }/guestbook/deleteForm?no=${guestVo.no}">[삭제]</a></td>
+									<td>
+										<button type="button" class="btn btn-primary btn-sm btnModal"  data-delno="${guestVo.no }">삭제</button>
+									</td>
 								</tr>
 								<tr>
 									<td colspan=4 class="text-left">${guestVo.content }</td>
@@ -125,9 +134,95 @@
 	</div>
 	<!-- //wrap -->
 
+
+<!-- 삭제폼 모달창 ------------------------------------------------------------------------->	
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">삭제 모달창</h4>
+      </div>
+      <div class="modal-body">
+        <input id="modalPassword" type="password" name=""><br>
+        <input id="modalNo" type="text" name="no">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+        <button id="btnDel" type="button" class="btn btn-danger">삭제</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- //삭제폼 모달창 ------------------------------------------------------------------------->
 </body>
 
 <script type="text/javascript">
+
+//모달창에 있는 삭제 버튼 클릭했을때 (진짜삭제)
+$("#btnDel").on("click", function(){
+	console.log("삭제버튼 클릭");
+	
+//서버에 데이타보내기  --->
+    //데이타 모으기
+	var password = $("#modalPassword").val();
+	var no = $("#modalNo").val();
+
+	//객체로 만들기
+	var guestVo = {
+		password: password,
+		no: no
+	};
+	
+	//요청
+	$.ajax({
+		
+		url : "${pageContext.request.contextPath }/api/guestbook/remove",		
+		type : "post",
+		data : guestVo,
+
+		dataType : "json",
+		success : function(result){
+			/*성공시 처리해야될 코드 작성*/
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});
+
+	
+
+
+	
+});
+
+
+//삭제 모달창 호출 버튼  -->모달창 뜸
+$("#guestbookListArea").on("click", ".btnModal", function(){ 
+	console.log("모달창 호출 버튼 클릭");
+	
+	//초기화
+	$("#modalPassword").val("");
+	$("#modalNo").val("");
+	
+	//방명록 글번호 input창 
+	//삭제버튼태그에서 no값 가져오기   data-delno=3
+	var no = $(this).data("delno");
+	
+	//모달창 input태그에 no값 넣기
+	$("#modalNo").val(no);
+	
+	//모달창 호출
+	$("#myModal").modal("show");
+});
+
+
+
 
 //방명록 저장 버튼 클릭할때
 $("#btnSubmit").on("click", function(){
@@ -176,6 +271,9 @@ $("#btnSubmit").on("click", function(){
 	});
 
 	
+});
+
+
 //방명록 리스트 그리기
 function render(guestbookVo){
 	
@@ -192,7 +290,7 @@ function render(guestbookVo){
 	str += '        <td>' + guestbookVo.no + '</td>';
 	str += '        <td>' + guestbookVo.name + '</td>';
 	str += '        <td>' + guestbookVo.regDate + '</td>';
-	str += '        <td><a href="${pageContext.request.contextPath }/guestbook/deleteForm?no=${guestVo.no}">[삭제]</a></td>';
+	str += '        <td><button type="button" class="btn btn-primary btn-sm btnModal"  data-delno="'+ guestbookVo.no + '">삭제</button></td>';
 	str += '   </tr>';
 	
 	str += '   <tr>';
@@ -202,14 +300,9 @@ function render(guestbookVo){
 	
 	$("#guestbookListArea").prepend(str);
 }
-	
-	
-	
-});
 
 
 </script>
-
 
 
 
