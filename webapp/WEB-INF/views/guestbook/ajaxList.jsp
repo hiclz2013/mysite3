@@ -98,7 +98,7 @@
 					
 					<div id="guestbookListArea">
 						<c:forEach items="${guestbookList}" var="guestVo">
-							<table class="guestRead">
+							<table id="t-${guestVo.no}"  class="guestRead">
 								<colgroup>
 									<col style="width: 10%;">
 									<col style="width: 40%;">
@@ -179,25 +179,30 @@ $("#btnDel").on("click", function(){
 		no: no
 	};
 	
+	var tmp;
+	
 	//요청
 	$.ajax({
-		
 		url : "${pageContext.request.contextPath }/api/guestbook/remove",		
 		type : "post",
 		data : guestVo,
 
 		dataType : "json",
-		success : function(result){
+		success : function(jsonResult){
+			console.log(jsonResult);
 			/*성공시 처리해야될 코드 작성*/
+			if(jsonResult.data > 0){
+				//화면에서 지우기
+				$("#t-"+guestVo.no).remove();
+				$("#myModal").modal("hide");
+			}else {
+				alert("비밀번호가 틀렸습니다.")
+			}
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
 		}
 	});
-
-	
-
-
 	
 });
 
@@ -278,7 +283,7 @@ $("#btnSubmit").on("click", function(){
 function render(guestbookVo){
 	
 	var str = "";
-	str += '<table class="guestRead">';
+	str += '<table id="t-' + guestbookVo.no +'" class="guestRead">';
 	str += '   <colgroup>';
 	str += '        <col style="width: 10%;">';
 	str += '        <col style="width: 40%;">';

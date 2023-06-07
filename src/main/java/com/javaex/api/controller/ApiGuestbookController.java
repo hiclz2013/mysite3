@@ -54,16 +54,19 @@ public class ApiGuestbookController {
 	}
 	
 	//ajax 삭제
+	@ResponseBody
 	@RequestMapping(value = "/api/guestbook/remove", method = {RequestMethod.GET, RequestMethod.POST})
-	public String remove(@ModelAttribute GuestbookVo guestbookVo) {
+	public JsonResult remove(@ModelAttribute GuestbookVo guestbookVo) {
 		System.out.println("ApiGuestbookController.remove()");
 		System.out.println(guestbookVo);
 		
 		int count = guestbookService.removeGuest(guestbookVo);
 		System.out.println(count);
 		
+		JsonResult jsonResult = new JsonResult();
+		jsonResult.success(count);
 		
-		return "";
+		return jsonResult;
 	}
 	
 	
