@@ -97,28 +97,8 @@
 					<!-- </form> -->
 					
 					<div id="guestbookListArea">
-						<c:forEach items="${guestbookList}" var="guestVo">
-							<table id="t-${guestVo.no}"  class="guestRead">
-								<colgroup>
-									<col style="width: 10%;">
-									<col style="width: 40%;">
-									<col style="width: 40%;">
-									<col style="width: 10%;">
-								</colgroup>
-								<tr>
-									<td>${guestVo.no }</td>
-									<td>${guestVo.name }</td>
-									<td>${guestVo.regDate }</td>
-									<td>
-										<button type="button" class="btn btn-primary btn-sm btnModal"  data-delno="${guestVo.no }">삭제</button>
-									</td>
-								</tr>
-								<tr>
-									<td colspan=4 class="text-left">${guestVo.content }</td>
-								</tr>
-							</table>
-							<!-- //guestRead -->
-						</c:forEach>
+						
+						
 					</div>
 				
 			</div>
@@ -163,70 +143,13 @@
 </body>
 
 <script type="text/javascript">
+//돔생성 후, 그리기 전 <--이벤트
+$(document).ready(function(){
+	//전체리스트 호출 가져오기
 
-//모달창에 있는 삭제 버튼 클릭했을때 (진짜삭제)
-$("#btnDel").on("click", function(){
-	console.log("삭제버튼 클릭");
-	
-//서버에 데이타보내기  --->
-    //데이타 모으기
-	var password = $("#modalPassword").val();
-	var no = $("#modalNo").val();
-
-	//객체로 만들기
-	var guestVo = {
-		password: password,
-		no: no
-	};
-	
-	var tmp;
-	
-	//요청
-	$.ajax({
-		url : "${pageContext.request.contextPath }/api/guestbook/remove",		
-		type : "post",
-		data : guestVo,
-
-		dataType : "json",
-		success : function(jsonResult){
-			console.log(jsonResult);
-			/*성공시 처리해야될 코드 작성*/
-			if(jsonResult.data > 0){
-				//화면에서 지우기
-				$("#t-"+guestVo.no).remove();
-				$("#myModal").modal("hide");
-			}else {
-				alert("비밀번호가 틀렸습니다.")
-			}
-		},
-		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
-		}
-	});
+	fetchList();
 	
 });
-
-
-//삭제 모달창 호출 버튼  -->모달창 뜸
-$("#guestbookListArea").on("click", ".btnModal", function(){ 
-	console.log("모달창 호출 버튼 클릭");
-	
-	//초기화
-	$("#modalPassword").val("");
-	$("#modalNo").val("");
-	
-	//방명록 글번호 input창 
-	//삭제버튼태그에서 no값 가져오기   data-delno=3
-	var no = $(this).data("delno");
-	
-	//모달창 input태그에 no값 넣기
-	$("#modalNo").val(no);
-	
-	//모달창 호출
-	$("#myModal").modal("show");
-});
-
-
 
 
 //방명록 저장 버튼 클릭할때
@@ -243,14 +166,14 @@ $("#btnSubmit").on("click", function(){
 		name: name,
 		password:password,
 		content:content
-	};  -->컨버트
+	}; 
 	
 	//ajax통신  -> 요청은 같은 기술 , 응답 이 데이터만 온다
 	$.ajax({
-		url : "${pageContext.request.contextPath }/api/guestbook/add",		
+		url : "${pageContext.request.contextPath }/api/guestbook/add2",		
 		type : "post",
 		contentType : "application/json",
-		data : guestbookVo, 
+		data : JSON.stringify(guestbookVo), 
 
 		dataType : "json",
 		success : function(jsonResult){
@@ -259,7 +182,7 @@ $("#btnSubmit").on("click", function(){
 			
 			if(jsonResult.result == "success"){
 				//정상처리
-				render(jsonResult.data); //리스트에 추가
+				render(jsonResult.data, "up"); //리스트에 추가
 				
 				//등록폼 비우기
 				$("[name='name']").val("");
@@ -279,8 +202,37 @@ $("#btnSubmit").on("click", function(){
 });
 
 
+
+
+
+
+
+	
+function fetchList(){
+	$.ajax({
+		url : "${pageContext.request.contextPath }/api/guestbook/list",		
+		type : "post",
+		
+		dataType : "json",
+		success : function(jsonResult){
+			console.log(jsonResult);
+			
+			var guestList = jsonResult.data;
+			
+ 			/*성공시 처리해야될 코드 작성*/
+ 			for(var i=0; i<guestList.length; i++){
+ 				render(guestList[i], "down");
+ 			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+		
+	});
+}	
+
 //방명록 리스트 그리기
-function render(guestbookVo){
+function render(guestbookVo, dir){
 	
 	var str = "";
 	str += '<table id="t-' + guestbookVo.no +'" class="guestRead">';
@@ -303,8 +255,18 @@ function render(guestbookVo){
 	str += '   </tr>';
 	str += '</table>';
 	
-	$("#guestbookListArea").prepend(str);
+	if(dir == 'up'){
+		$("#guestbookListArea").prepend(str);	
+		console.log("up");
+	}else if(dir == 'down'){
+		console.log("down");
+		$("#guestbookListArea").append(str);
+	}else {
+		console.log("방향오류");
+	}
+	
 }
+
 
 
 </script>
