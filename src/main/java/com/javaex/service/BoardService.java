@@ -36,13 +36,12 @@ public class BoardService {
 		int endRum = (startRnum + listCnt) - 1;
 		
 		List<BoardVo> boardList = boardDao.selectList3(startRnum, endRum);
-		
-		
+
 		///////////////////////////////////////////////////////////////////////
 		//페이징 계산
 		///////////////////////////////////////////////////////////////////////
 		//전체 글갯수
-		int totalCount = 123;
+		int totalCount = boardDao.totalCount();
 		
 		//페이지당 버튼 갯수
 		int pageBtnCount = 5;

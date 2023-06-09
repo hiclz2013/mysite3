@@ -16,6 +16,16 @@ public class BoardDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	/* 게시판 전체글 갯수 */
+	public int totalCount() {
+		System.out.println("BoardDao.totalCount()");
+		
+		int totalCount = sqlSession.selectOne("board.totalCount");
+		return totalCount;
+	}
+	
+	
+	/* 게시판 리스트: 페이징 포함 */
 	public List<BoardVo> selectList3(int startRnum, int endRnum){
 		System.out.println("BoardDao.selectList3()");
 		
