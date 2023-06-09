@@ -77,7 +77,7 @@
 							</thead>
 							<tbody>
 								
-								<c:forEach items="${requestScope.boardList}" var="boardVo">
+								<c:forEach items="${requestScope.pMap.boardList}" var="boardVo">
 									<tr>
 										<td>${boardVo.no}</td>
 										<td class="text-left"><a href="${pageContext.request.contextPath }/board/read?no=${boardVo.no}">${boardVo.title}</a></td>
@@ -98,18 +98,17 @@
 			
 						<div id="paging">
 							<ul>
-								<li><a href="">◀</a></li>
-								<li><a href="">1</a></li>
-								<li><a href="">2</a></li>
-								<li><a href="">3</a></li>
-								<li><a href="">4</a></li>
-								<li class="active"><a href="">5</a></li>
-								<li><a href="">6</a></li>
-								<li><a href="">7</a></li>
-								<li><a href="">8</a></li>
-								<li><a href="">9</a></li>
-								<li><a href="">10</a></li>
-								<li><a href="">▶</a></li>
+								<c:if test="${pMap.prev == true}">
+									<li><a href="">◀</a></li>
+								</c:if>
+								
+								<c:forEach begin="${pMap.startPageBtnNo}" end="${pMap.endPageBtnNo}"  step="1"  var="page">
+									<li><a href="">${page}</a></li>
+								</c:forEach>
+								
+								<c:if test="${pMap.next == true}">
+									<li><a href="">▶</a></li>
+								</c:if>
 							</ul>
 							
 							

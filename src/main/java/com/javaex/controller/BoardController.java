@@ -1,6 +1,7 @@
 package com.javaex.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -28,8 +29,17 @@ public class BoardController {
 	public String list3(@RequestParam("crtPage") int crtPage,    Model model) {
 		System.out.println("BoardController.list3()");
 		
-		List<BoardVo> boardList = boardService.getList3(crtPage);
-		model.addAttribute("boardList", boardList );
+		Map<String, Object> pMap= boardService.getList3(crtPage);
+		model.addAttribute("pMap", pMap );
+		
+		System.out.println(pMap);
+		/*
+		pMap.put("prev", prev);
+		pMap.put("startPageBtnNo", startPageBtnNo);
+		pMap.put("endPageBtnNo", endPageBtnNo);
+		pMap.put("next", next);
+		pMap.put("boardList", boardList);
+		*/
 		
 		return "board/list3";
 	}

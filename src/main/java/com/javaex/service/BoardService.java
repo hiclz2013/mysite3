@@ -1,6 +1,8 @@
 package com.javaex.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,14 +17,12 @@ public class BoardService {
 	private BoardDao boardDao;
 	
 	/* 게시판 리스트: 페이징 포함 */
-	public List<BoardVo> getList3(int crtPage){
+	public Map<String, Object> getList3(int crtPage){
 		System.out.println("BoardService.getList3()");
 		
-		//10                                5              
-		//1-10,   11-20                     1-5, 6-10
-		//rownum 번호를 구해야한다
-		//startRnum, endRnum
-		
+		///////////////////////////////////////////////////////////////////////
+		//리스트 가져오기
+		///////////////////////////////////////////////////////////////////////
 		//페이지당 글갯수
 		int listCnt = 10;
 		
@@ -35,7 +35,51 @@ public class BoardService {
 		List<BoardVo> boardList = boardDao.selectList3(startRnum, endRum);
 		
 		
-		return boardList;
+		///////////////////////////////////////////////////////////////////////
+		//페이징 계산
+		///////////////////////////////////////////////////////////////////////
+		//전체 글갯수
+		int totalCount = 123;
+		
+		//페이지당 버튼 갯수
+		int pageBtnCount = 5;
+		
+		//마지막 버튼 번호
+		//1   -->  1~5
+		//2   -->  1~5
+		//3   -->  1~5
+		//4   -->  1~5
+		//5   -->  1~5
+		//6   -->  6~10
+		//10  -->  6~10
+		int endPageBtnNo =  (int)Math.ceil(crtPage/(double)pageBtnCount) * pageBtnCount;
+		
+		//시작버튼 번호
+		int startPageBtnNo = (endPageBtnNo - pageBtnCount) + 1;
+		
+		//다음 화살표  true  false
+		boolean next = false;
+		if(endPageBtnNo * listCnt < totalCount) {  //10 * 10 < 123
+			next = true;
+		}else {
+			next = false;
+		}
+		
+		//이전 화살표
+		boolean prev = false;
+		if(startPageBtnNo != 1) {
+			prev = true;
+		}
+		
+		//맵으로 만들기
+		Map<String, Object> pMap = new HashMap<String, Object>();
+		pMap.put("prev", prev);
+		pMap.put("startPageBtnNo", startPageBtnNo);
+		pMap.put("endPageBtnNo", endPageBtnNo);
+		pMap.put("next", next);
+		pMap.put("boardList", boardList);
+		
+		return pMap;
 	}
 	
 	

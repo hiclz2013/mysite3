@@ -19,15 +19,11 @@ public class BoardDao {
 	public List<BoardVo> selectList3(int startRnum, int endRnum){
 		System.out.println("BoardDao.selectList3()");
 		
-		System.out.println(startRnum + "  " + endRnum);
-		
 		Map<String, Integer> bMap = new HashMap<String, Integer>();
 		bMap.put("startRnum", startRnum);
 		bMap.put("endRnum", endRnum);
 		
 		List<BoardVo> boardList = sqlSession.selectList("board.selectList3", bMap);
-		
-		System.out.println(boardList);
 		
 		return boardList;
 	}
