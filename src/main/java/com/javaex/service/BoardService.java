@@ -20,6 +20,9 @@ public class BoardService {
 	public Map<String, Object> getList3(int crtPage){
 		System.out.println("BoardService.getList3()");
 		
+		//현재페이지 음수면 1페이지로 처리
+		crtPage = (crtPage >=1) ? crtPage : (crtPage = 1);
+		
 		///////////////////////////////////////////////////////////////////////
 		//리스트 가져오기
 		///////////////////////////////////////////////////////////////////////
@@ -63,6 +66,8 @@ public class BoardService {
 			next = true;
 		}else {
 			next = false;
+			//끝 버튼 번호 endPageBtnNo 다시 계산
+			endPageBtnNo =   (int)Math.ceil(totalCount/(double)listCnt);
 		}
 		
 		//이전 화살표
