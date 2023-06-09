@@ -25,10 +25,10 @@ public class BoardController {
 	
 	/* 게시판 리스트 페이징기능 포함 */
 	@RequestMapping(value="/list3", method= {RequestMethod.GET, RequestMethod.POST})
-	public String list3(Model model) {
+	public String list3(@RequestParam("crtPage") int crtPage,    Model model) {
 		System.out.println("BoardController.list3()");
 		
-		List<BoardVo> boardList = boardService.getList();
+		List<BoardVo> boardList = boardService.getList3(crtPage);
 		model.addAttribute("boardList", boardList );
 		
 		return "board/list3";
@@ -82,8 +82,9 @@ public class BoardController {
 
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		boardVo.setUserNo(authUser.getNo());
-		boardService.addBoard(boardVo);
 
+		//boardService.addBoard(boardVo);
+		
 		return "redirect:/board/list";
 	}
 
