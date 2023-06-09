@@ -26,7 +26,7 @@ public class BoardController {
 	
 	/* 게시판 리스트 페이징기능 포함 */
 	@RequestMapping(value="/list3", method= {RequestMethod.GET, RequestMethod.POST})
-	public String list3(@RequestParam("crtPage") int crtPage,    Model model) {
+	public String list3(@RequestParam(value="crtPage", required = false, defaultValue = "1" ) int crtPage,    Model model) {
 		System.out.println("BoardController.list3()");
 		
 		Map<String, Object> pMap= boardService.getList3(crtPage);
