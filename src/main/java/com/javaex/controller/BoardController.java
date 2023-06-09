@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.BoardService;
 import com.javaex.vo.BoardVo;
@@ -23,6 +22,20 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	/* 게시판 리스트 페이징기능 포함 */
+	@RequestMapping(value="/list3", method= {RequestMethod.GET, RequestMethod.POST})
+	public String list3(Model model) {
+		System.out.println("BoardController.list3()");
+		
+		List<BoardVo> boardList = boardService.getList();
+		model.addAttribute("boardList", boardList );
+		
+		return "board/list3";
+	}
+	
+	
+	
 	
 	
 	/* 게시판 리스트: 검색기능 포함 */
