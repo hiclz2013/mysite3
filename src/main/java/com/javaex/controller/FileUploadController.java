@@ -33,7 +33,7 @@ public class FileUploadController {
 		
 		model.addAttribute("saveName", saveName);
 		
-		return "fileupload";
+		return "fileupload/result";
 	}
 	
 

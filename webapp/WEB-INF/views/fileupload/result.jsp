@@ -56,7 +56,7 @@
 			<div id="file">
 				
 					<div>
-						<img id="resultImg" src="C:\javaStudy\upload\16861970923411ca79328-ac95-4b7c-b9ca-e287ee80720c.jpg">
+						<img id="resultImg" src="${pageContext.request.contextPath }/upload/${saveName}">
 					</div>
 					<p>
 						<a id="btnUpload" href="${pageContext.request.contextPath }/fileupload/form"> 다시 업로드 하기 </a>
