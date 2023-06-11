@@ -44,9 +44,9 @@
 		<!-- aside -->
 		<div id="aside">
 			<h2>방명록</h2>
-			<ul>
-				<li>일반방명록</li>
-				<li>ajax방명록</li>
+			<ul> 
+				<li><a href="${pageContext.request.contextPath }/guestbook/addList">일반방명록</a></li>
+				<li><a href="${pageContext.request.contextPath }/api/guestbook/addList2">ajax방명록</a></li>
 			</ul>
 		</div>
 		<!-- //aside -->
