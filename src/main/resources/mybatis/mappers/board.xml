@@ -23,7 +23,7 @@
 			        ort.content,
 			        ort.hit,
 			        ort.reg_date regDate,
-			        ort.user_no,
+			        ort.user_no userNo,
 			        ort.name
 			from (select  rownum rn,
 			              ot.no,

@@ -13,7 +13,7 @@
 <body>
 	<div id="wrap">
 
-		<!-- //header -->
+		<!-- header -->
 		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 		<!-- //header -->
 		
@@ -21,8 +21,8 @@
 		<div id="nav">
 			<ul>
 				<li><a href="${pageContext.request.contextPath }/guestbook/addList">방명록</a></li>
-				<li><a href="">갤러리</a></li>
-				<li><a href="${pageContext.request.contextPath }/board/list2">게시판</a></li>
+				<li><a href="${pageContext.request.contextPath }/gallery/list">갤러리</a></li>
+				<li><a href="${pageContext.request.contextPath }/board/list4">게시판</a></li>
 				<li><a href="">입사지원서</a></li>
 			</ul>
 			<div class="clear"></div>
@@ -33,9 +33,9 @@
 		<div id="aside">
 			<h2>회원</h2>
 			<ul>
-				<li>회원정보</li>
-				<li>로그인</li>
-				<li>회원가입</li>
+				<li><a href="${pageContext.request.contextPath }/user/modifyForm">회원정보수정</a></li>
+				<li><a href="${pageContext.request.contextPath }/user/loginForm">로그인</a></li>
+				<li><a href="${pageContext.request.contextPath }/user/joinForm">회원가입</a></li>
 			</ul>
 		</div>
 		<!-- //aside -->

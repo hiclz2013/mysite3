@@ -14,16 +14,16 @@
 <body>
 	<div id="wrap">
 
-		<!-- 해더-->
+		<!-- header -->
 		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
-		<!-- //해더-->
+		<!-- //header -->
 		
 		<!-- nav -->
 		<div id="nav">
 			<ul>
 				<li><a href="${pageContext.request.contextPath }/guestbook/addList">방명록</a></li>
-				<li><a href="">갤러리</a></li>
-				<li><a href="${pageContext.request.contextPath }/board/list2">게시판</a></li>
+				<li><a href="${pageContext.request.contextPath }/gallery/list">갤러리</a></li>
+				<li><a href="${pageContext.request.contextPath }/board/list4">게시판</a></li>
 				<li><a href="">입사지원서</a></li>
 			</ul>
 			<div class="clear"></div>
@@ -35,7 +35,7 @@
 			<div id="aside">
 				<h2>게시판</h2>
 				<ul>
-					<li><a href="">일반게시판</a></li>
+					<li><a href="${pageContext.request.contextPath }/board/list4">일반게시판</a></li>
 					<li><a href="">댓글게시판</a></li>
 				</ul>
 			</div>

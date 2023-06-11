@@ -61,9 +61,6 @@ public class BoardController {
 	}
 	
 	
-	
-	
-	
 	/* 게시판 리스트: 검색기능 포함 */
 	@RequestMapping(value="/list2", method= {RequestMethod.GET, RequestMethod.POST})
 	public String list2(@RequestParam(value="keyword", required = false, defaultValue = "") String keyword, 

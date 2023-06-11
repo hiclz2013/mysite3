@@ -21,8 +21,20 @@
 <body>
 	<div id="wrap">
 
+		<!-- header -->
 		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 		<!-- //header -->
+		
+		<!-- nav -->
+		<div id="nav">
+			<ul>
+				<li><a href="${pageContext.request.contextPath }/guestbook/addList">방명록</a></li>
+				<li><a href="${pageContext.request.contextPath }/gallery/list">갤러리</a></li>
+				<li><a href="${pageContext.request.contextPath }/board/list4">게시판</a></li>
+				<li><a href="">입사지원서</a></li>
+			</ul>
+			<div class="clear"></div>
+		</div>
 		<!-- //nav -->
 
 		<c:import url="/WEB-INF/views/include/galleryAside.jsp"></c:import>
