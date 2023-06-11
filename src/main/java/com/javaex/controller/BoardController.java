@@ -24,6 +24,23 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
+	
+	/* 게시판 리스트 페이징+검색기능 포함 */
+	@RequestMapping(value="/list4", method= {RequestMethod.GET, RequestMethod.POST})
+	public String list4(@RequestParam(value="crtPage", required = false, defaultValue = "1" ) int crtPage,
+						@RequestParam(value="keyword", required = false, defaultValue = "") String keyword,
+						Model model) {
+		System.out.println("BoardController.list4()");
+		
+		Map<String, Object> pMap= boardService.getList4(crtPage, keyword);
+		model.addAttribute("pMap", pMap );
+		
+		System.out.println(pMap);
+		return "board/list4";
+	}
+	
+	
+	
 	/* 게시판 리스트 페이징기능 포함 */
 	@RequestMapping(value="/list3", method= {RequestMethod.GET, RequestMethod.POST})
 	public String list3(@RequestParam(value="crtPage", required = false, defaultValue = "1" ) int crtPage,    Model model) {
@@ -40,7 +57,6 @@ public class BoardController {
 		pMap.put("next", next);
 		pMap.put("boardList", boardList);
 		*/
-		
 		return "board/list3";
 	}
 	

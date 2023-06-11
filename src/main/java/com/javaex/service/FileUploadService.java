@@ -11,10 +11,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FileUploadService {
-	String saveDir = "C:\\javaStudy\\upload";
 	
 	//파일 처리
 	public String restore(MultipartFile file) {
+		String saveDir = "C:\\javaStudy\\upload";
+		
 		System.out.println("FileUploadService.restore()");
 		System.out.println(file.getOriginalFilename());
 		

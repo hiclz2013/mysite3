@@ -49,7 +49,7 @@ public class GuestbookService {
 		
 		//글저장
 		System.out.println(guestbookVo);  //no가 없다
-		int count = guestbookDao.insertGuestbookKey(guestbookVo);
+		guestbookDao.insertGuestbookKey(guestbookVo);
 		System.out.println(guestbookVo);  //no가 있다
 		
 		int no = guestbookVo.getNo(); //방금 저장한 글 번호
@@ -77,7 +77,7 @@ public class GuestbookService {
 		System.out.println("GuestbookService.addGuest()");
 		
 		//글등록  no확인
-		int count  = guestbookDao.insertSelectKey(guestbookVo);
+		guestbookDao.insertSelectKey(guestbookVo);
 		int no = guestbookVo.getNo();
 		
 		//no 글가져오기

@@ -67,7 +67,7 @@
 						
 							<!-- 내용 -->
 							<div class="form-group">
-								<textarea id="txt-content" name="content" value="" ></textarea>
+								<textarea id="txt-content" name="content" ></textarea>
 							</div>
 							
 							<a id="btn_cancel" href="${pageContext.request.contextPath}/board/list">취소</a>
