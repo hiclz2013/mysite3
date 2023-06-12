@@ -62,7 +62,7 @@
 
 			<div id="user">
 				<div id="joinForm">
-					<form action="${pageContext.request.contextPath }/user/join" method="get">
+					<form id="joinSubmitForm" action="${pageContext.request.contextPath }/user/join" method="get">
 
 						<!-- 아이디 -->
 						<div class="form-group">
@@ -104,6 +104,10 @@
 						</div>
 
 					</form>
+					
+					<!-- 예제 -->
+					<a id="naver" href="https://www.naver.com/">네이버</a>
+					
 				</div>
 				<!-- //joinForm -->
 			</div>
@@ -121,49 +125,79 @@
 </body>
 
 <script type="text/javascript">
+//예제 
+//원래의 태그의 기능을 사용하지 않을때
+$("#naver").on("click", function(event){
+	event.preventDefault();
+});
 
-	//아이디 체크 버튼 클릭했을때
-	$("#btnIdCheck").on("click", function(){
-		console.log("버튼 클릭");
-		
-		//id 추출
-		var id = $("[name=id]").val();
-		
-		console.log(id);
-		
-		//통신  id////////////////////////////////////////////
-		$.ajax({
-			url : "${pageContext.request.contextPath }/user/idcheck",		
-			type : "post",
-			/* contentType : "application/json", */
-			data : {id : id},
+
+//회원가입 버튼을 눌렀을때:  전송submit은 form에 이벤트
+$("#joinSubmitForm").on("submit", function(){
+	console.log("전송버튼 클릭");
 	
-			dataType : "json",
-			success : function(jsonResult){
-				console.log(jsonResult);
-				
-				if(jsonResult.result == 'success'){ //처리성공
-					//사용가능한지 불가능 한지 표현한다
-					if(jsonResult.data == true){
-						//사용가능
-						$("#idcheckMsg").html( id+ "는 사용가능 합니다.");    
-					}else {
-						//사용불가
-						$("#idcheckMsg").html( id+ "는 사용중입니다.");    
-					}
-					
+	//아이디 체크
+	var id = $("#input-uid").val();
+	if(id.length < 1){ //입력안했으면
+		alert("아이디를 입력해주세요");
+		return false;
+	}
+	
+	//패스워드 체크...
+	
+	//약관동의 유무
+	var agree = $("#chk-agree").is(":checked");
+	if(agree == false){
+		alert("약관에 동의해 주세요");
+		return false;
+	}	
+	
+	return true; 
+});
+
+
+//아이디 체크 버튼 클릭했을때
+$("#btnIdCheck").on("click", function(){
+	console.log("버튼 클릭");
+	
+	//id 추출
+	var id = $("[name=id]").val();
+	
+	console.log(id);
+	
+	//통신  id////////////////////////////////////////////
+	$.ajax({
+		url : "${pageContext.request.contextPath }/user/idcheck",		
+		type : "post",
+		/* contentType : "application/json", */
+		data : {id : id},
+
+		dataType : "json",
+		success : function(jsonResult){
+			console.log(jsonResult);
+			
+			if(jsonResult.result == 'success'){ //처리성공
+				//사용가능한지 불가능 한지 표현한다
+				if(jsonResult.data == true){
+					//사용가능
+					$("#idcheckMsg").html( id+ "는 사용가능 합니다.");    
 				}else {
-					//메세지 출력
-					var msg = jsonResult.failMsg;
-					alert(msg);
+					//사용불가
+					$("#idcheckMsg").html( id+ "는 사용중입니다.");    
 				}
-			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
+				
+			}else {
+				//메세지 출력
+				var msg = jsonResult.failMsg;
+				alert(msg);
 			}
-		});
-		
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
 	});
+	
+});
 
 </script>
 
